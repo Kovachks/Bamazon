@@ -24,7 +24,7 @@ function postItems() {
 			console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].department_name + " | $" + res[i].price);
 		}
 		console.log("------------------------------------");
-		itemBuy(err, res);
+		itemBuy();
 	});
 };
 
@@ -45,10 +45,30 @@ function itemBuy() {
 		])
 		.then(function(answer) {
 			if (res[answer.itemToBid - 1].stock_quantity > answer.quantityToBuy) {
-				console.log("enough")
+				var newQuantity = res[answer.itemToBid - 1].stock_quantity - answer.quantityToBuy;
+				var purchasePrice = answer.quantityToBuy * res[answer.itemToBid - 1].price;
+				connection.query(
+					"UPDATE products SET ? WHERE ?",
+					[
+						{
+							stock_quantity: newQuantity
+						},
+						{
+							item_id: answer.itemToBid
+						}
+					])
+				console.log("----------------------------------------");
+				console.log("You have purchased " + answer.quantityToBuy + " " + res[answer.itemToBid - 1].product_name + "s.");
+				console.log("The total cost of your purchase is $" + purchasePrice + ".")
+				console.log("----------------------------------------");
+				postItems();
+
 			} else {
-				console.log("not enough")
+				console.log("Insufficient quantity!");
+				console.log("------------------------------------");
+				postItems();
 			}
 		})
 	})
-}	
+}
+
