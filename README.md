@@ -18,4 +18,4 @@ of the item they would like to buy.  Once they enter the quantity that they woul
 
 2. The user will be notified that there is not enough stock to fulfill their order request.  The user will also be notified of remaining stock in the warehouse.
 
-After both scenarios the user will then be thrown back to the beginning of the application and the item list will be posted once again.
+After both scenarios the user will then be asked if they would like to continue and look at the list of items to purchase and restart the process.

@@ -61,14 +61,38 @@ function itemBuy() {
 				console.log("You have purchased " + answer.quantityToBuy + " " + res[answer.itemToBid - 1].product_name + "s.");
 				console.log("The total cost of your purchase is $" + purchasePrice + ".")
 				console.log("----------------------------------------");
-				postItems();
-
+				inquirer.prompt(
+				{
+					name: "continue",
+					type: "list",
+					message: "Would you like to continue?",
+					choices: ['Yes', 'No']
+				})
+				.then(function(answer) {
+					if (answer.continue === 'Yes') {
+						postItems();
+					} else {
+						process.exit();
+					}
+				})
 			} else {
 				console.log("Insufficient quantity!");
 				console.log("------------------------------------");
-				postItems();
+				inquirer.prompt(
+				{
+					name: "continue",
+					type: "list",
+					message: "Would you like to continue?",
+					choices: ['Yes', 'No']
+				})
+				.then(function(answer) {
+					if (answer.continue === 'Yes') {
+						postItems();
+					} else {
+						process.exit();
+					}
+				})
 			}
 		})
 	})
 }
-
